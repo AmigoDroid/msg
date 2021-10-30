@@ -9,13 +9,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.2/socket.io.js"></script>
     <link rel="stylesheet" href="index.css">
 
-    <title>Document</title>
+    <title>Canal Privado</title>
 </head>
 
 <body>
     <form id="chat">
         <input type="text" name="user" id="user" placeholder="Seu Nome">
-        <div id="mensagemtxt">mensagens</div>
+        <div id="mensagemtxt"><h2>Mensagens</h2></div>
         <input type="text" name="msg" id="txt" placeholder="Mensagem">
         <button type="submit" id="enviar">Enviar</button>
     </form>
@@ -40,7 +40,7 @@
 
         //mostar mensagem na tela
         function renderMSG(msg) {
-            $('#mensagemtxt').append(`<div><strong>${msg.altor}: </strong> ${msg.mensagem}</div>`)
+            $('#mensagemtxt').append(`<div id='msg'><strong>${msg.altor}: </strong> ${msg.mensagem}</div>`)
         }
         //mostrar mensagens anteriores 
         soket.on('msgall', function(dados) {
@@ -76,7 +76,7 @@
                 console.log(name_mensagem);
 
             } else {
-                alert('preencha nome de usuario e mensagem');
+              //  alert('preencha nome de usuario e mensagem');
             }
 
 
