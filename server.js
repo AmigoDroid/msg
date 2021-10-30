@@ -7,6 +7,8 @@ const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 
+const PORT = process.env.PORT;
+
 app.use(express.static(path.join(__dirname,'public')));
 app.set('views',path.join(__dirname,"public"));
 app.engine('html',require('ejs').renderFile);
@@ -27,7 +29,7 @@ var datamsg =[];
 io.on('connection', socket =>{
 console.log('conectado: id='+socket.id);
  socket.emit('msgall',datamsg);
- 
+
 //ouvindo se alguém mandou mensagem
 socket.on('sendMsg', data => {
     datamsg.push(data);
@@ -39,4 +41,4 @@ socket.on('sendMsg', data => {
 });
 
 //ouvindo na porta 3000
-server.listen(3000);
+server.listen(PORT||3000);
