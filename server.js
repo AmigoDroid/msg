@@ -19,9 +19,6 @@ app.use("/",(req , res)=>{
  res.render("index.html")
 });
 
-//Renderisar mensagem
-
-
 //armazaenar as mensagens
 var datamsg =[];
 
