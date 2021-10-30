@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.2/socket.io.js"></script>
+    <link rel="stylesheet" href="index.css">
+ 
+    <title>Document</title>
+</head>
+<body>
+<form id="chat">
+    <input type="text" name="user" id="user" placeholder="usuario">
+    <div id="mensagemtxt">mensagens</div>
+    <input type="text" name="msg" id="txt" placeholder="mensagem">
+    <button type="submit" id="enviar">Enviar</button>
+</form>
+<script>
+var soket = io(""+location);
+function renderMSG(msg){
+$('#mensagemtxt').append(`<div><strong>${msg.altor}: </strong> ${msg.mensagem}</div>`)
+}
+
+soket.on('msgall', function(dados){
+    for(mensagem of dados){
+        renderMSG(mensagem)
+    }
+
+
+})
+
+soket.on('recebermsg',function(data) {
+    renderMSG(data)
+});
+
+
+
+$('#chat').submit(function(event){
+
+    event.preventDefault();
+    var name_usuario =document.getElementById('user').value;
+    var name_mensagem =document.getElementById('txt').value;
+    console.log(name_mensagem);
+
+    if(name_usuario.length >= 0 && name_mensagem.length>=0){
+        var msgObj = {
+            altor:name_usuario,
+            mensagem:name_mensagem
+        }
+        //enviar mensagem
+        soket.emit('sendMsg',msgObj);
+        renderMSG(msgObj);
+       
+    }
+    
+
+})
+
+
+</script>
+</body>
+</html>
