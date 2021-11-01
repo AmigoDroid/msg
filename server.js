@@ -17,7 +17,7 @@ app.set('view engine','html');
 //rota padrão do server
 app.use("/",(req , res)=>{
  res.render("index.html")
-});
+}); 
 
 //armazaenar as mensagens
 var datamsg =[];

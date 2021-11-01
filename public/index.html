@@ -15,7 +15,8 @@
 <body>
     <form id="chat">
         <input type="text" name="user" id="user" placeholder="Seu Nome">
-        <div id="mensagemtxt"><h2>Mensagens</h2></div>
+        <div id="mensagemtxt"><h2>Mensagens</h2>
+        </div>
         <input type="text" name="msg" id="txt" placeholder="Mensagem">
         <button type="submit" id="enviar">Enviar</button>
     </form>
@@ -40,7 +41,10 @@
 
         //mostar mensagem na tela
         function renderMSG(msg) {
-            $('#mensagemtxt').append(`<div id='msg'><strong>${msg.altor}: </strong> ${msg.mensagem}</div>`)
+            $('#mensagemtxt').append(`    <div id='msg'>
+                
+                <strong>${msg.altor}: </strong> ${msg.mensagem} <strong> ~ </strong> ${msg.hora}:${msg.min}
+        </div>`)
         }
         //mostrar mensagens anteriores 
         soket.on('msgall', function(dados) {
@@ -64,9 +68,14 @@
             var name_mensagem = document.getElementById('txt').value;
 
             if (name_usuario.length > 0 && name_mensagem.length > 0) {
+                var date = new Date();
+            var hora = date.getHours();
+            var min = date.getMinutes();
                 var msgObj = {
                         altor: name_usuario,
-                        mensagem: name_mensagem
+                        mensagem: name_mensagem,
+                        hora:hora,
+                        min:min
                     }
                     //enviar mensagem
                 soket.emit('sendMsg', msgObj);
