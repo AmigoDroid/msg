@@ -16,7 +16,7 @@ app.set('view engine','html');
 
 //rota padrão do server
 app.use("/",(req , res)=>{
- res.render("index.html")
+ res.render("admin")
 }); 
 
 //armazaenar as mensagens

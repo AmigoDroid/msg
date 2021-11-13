@@ -1,0 +1,32 @@
+#mensagemtxt {
+    padding-left: 20px;
+}
+#user {
+   width: 80%;
+   margin: 20px;
+   padding: 5px;
+   border-radius: 5px;
+   border: 1px solid #000;
+   outline: none;
+}
+#txt{
+    width: 80%;
+    margin: 20px;
+    padding: 8px;
+}
+#chat{
+    margin-bottom: 40px;
+    padding: 5px;
+   
+}
+#msg{
+  border: 1px solid #000;
+  margin: 4px;
+  padding: 7px;
+  border-radius: 10px;
+  
+}
+button{
+    height: 40px;
+    width: 100%;
+}
