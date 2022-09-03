@@ -32,6 +32,7 @@ socket.on('sendMsg', data => {
     datamsg.push(data);
    
     socket.broadcast.emit('recebermsg',data);
+    socket.broadcast.emit('notificar');
     console.log(data);
 });
 

@@ -23,6 +23,7 @@
     </form>
     <script>
         var soket = io("" + location);
+        var audio = new Audio("../assets/sms.mp3");
 
         function salvarUser(nome) {
             localStorage.setItem('nome', nome);
@@ -58,6 +59,10 @@
             //receber mensagens enviadas na tela
         soket.on('recebermsg', function(data) {
             renderMSG(data)
+        });
+        soket.on('notificar', function() {
+            //tocar audio
+            audio.play();
         });
 
 
