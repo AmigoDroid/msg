@@ -1,11 +1,13 @@
 
 const express = require('express')
 const path  = require('path');
+const cors = require('cors');
 
 
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
+app.use(cors({origin:'*'}))
 
 const PORT = process.env.PORT;
 
@@ -32,7 +34,7 @@ socket.on('sendMsg', data => {
     datamsg.push(data);
    
     socket.broadcast.emit('recebermsg',data);
-    socket.broadcast.emit('notificar');
+    socket.broadcast.emit('notificar',true);
     console.log(data);
 });
 
