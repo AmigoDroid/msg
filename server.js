@@ -1,15 +1,9 @@
-
-const express = require('express')
+const express = require('express');
 const path  = require('path');
-const cors = require('cors');
-
-
-const app = express();
+const app =express();
 const server = require('http').createServer(app);
-const io = require('socket.io')(server);
-app.use(cors({origin:'*'}))
-
-const PORT = process.env.PORT;
+const io = require('socket.io')(server,{cors:{origin:"*"}});
+const PORT = process.env.PORT ||3333;
 
 app.use(express.static(path.join(__dirname,'public')));
 app.set('views',path.join(__dirname,"public"));
@@ -34,11 +28,13 @@ socket.on('sendMsg', data => {
     datamsg.push(data);
    
     socket.broadcast.emit('recebermsg',data);
-    socket.broadcast.emit('notificar',true);
+    socket.broadcast.emit('notificar','true');
     console.log(data);
 });
 
 });
 
 //ouvindo na porta 3000
-server.listen(PORT||3000);
+server.listen(PORT,()=>{
+    console.log('rodando na porta: '+PORT);
+});
