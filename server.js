@@ -14,21 +14,22 @@ const io = new Server(server, {
   },
 });
 const db =[]
-let grupo = {
-  '':[{autor:'',body:'',data:'',sockeId:''}]
-}
+let grupo = {}
 
 io.on("connection", (socket) => {
   console.log(`User Connected: ${socket.id}`);
 
   socket.on("join_room", (data) => {
     const {room,author,message,time} = data;
-    if(db[''+room] == true){
+    console.log('Grupo: '+room);
+    if(db.find(grupoId => grupoId[''+room] == room)){
+      console.log('grupo existe');
       socket.join(data.room);
-      socket.to(room).emit('update',db[""+room])
+      socket.to(room).emit('update',db.find(grupoId => grupoId[''+room]))
     }else{
-      grupo[room] =[];
+      grupo[""+room] =[];
       db.push(grupo);
+      console.log('grupo não existe');
       socket.join(data.room);
     }
   
@@ -37,7 +38,7 @@ io.on("connection", (socket) => {
 
   socket.on("send_message", (data) => {
     const {room,author,message,time} = data;
-    grupo[room].push({author:author,message:message,time:time,sockeId:socket.id});
+    grupo[""+room].push({author:author,message:message,time:time,sockeId:socket.id});
     socket.to(data.room).emit("receive_message", data);
   });
 
