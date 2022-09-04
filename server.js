@@ -14,7 +14,7 @@ const io = new Server(server, {
   },
 });
 const db =[]
-let grupo = {};
+
 
 io.on("connection", (socket) => {
   console.log(`User Connected: ${socket.id}`);
@@ -22,12 +22,16 @@ io.on("connection", (socket) => {
   socket.on("join_room", (data) => {
     console.log('Grupo: '+data);
 
-    if(db[''+data] == ""+data){
+    for(let i =0; i< db.length ;i++){
+      const obj = db[i];
+      console.log(obj);
+      if(false){
       console.log('grupo existe');
       socket.join(data);
       socket.to(data).emit('update',db[''+data])
       console.log('data: '+JSON.stringify(db));
     }else{
+      let grupo = {};
       grupo[data]=[];
       db.push(grupo);
       console.log('grupo não existe');
@@ -36,7 +40,7 @@ io.on("connection", (socket) => {
     }
   
     console.log(`User with ID: ${socket.id} joined room: ${data}`);
-  });
+}});
 
   socket.on("send_message", (data) => {
     const {room,author,message,time} = data;
