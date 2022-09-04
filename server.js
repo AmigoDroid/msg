@@ -21,14 +21,13 @@ var datamsg =[];
 //ferificar se tem alguém conectado
 io.on('connection', socket =>{
 console.log('conectado: id='+socket.id);
- socket.emit('msgall',datamsg);
+ socket.broadcast.emit('msgall',datamsg);
 
 //ouvindo se alguém mandou mensagem
 socket.on('sendMsg', data => {
     datamsg.push(data);
    
     socket.broadcast.emit('recebermsg',data);
-    socket.broadcast.emit('notificar','true');
     console.log(data);
 });
 
