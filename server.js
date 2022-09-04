@@ -31,11 +31,12 @@ io.on("connection", (socket) => {
         console.log('grupo localizado');
         console.log(db);
 
-      }else if( i== db.length){
+      }else if( i>= db.length){
 
         console.log("não encontrado o grupo no banco de dados");
         let grupo ={};
         grupo[data] = [];
+        db.push(grupo)
         socket.join(data);
       }
     }
@@ -46,7 +47,7 @@ io.on("connection", (socket) => {
   socket.on("send_message", (data) => {
     const {room,author,message,time} = data;
     let grupo = {};
-    grupo[""+room].push({author:author,message:message,time:time,sockeId:socket.id});
+    grupo={ room:{author:author,message:message,time:time,sockeId:socket.id}};
     socket.to(room).emit("receive_message", data);
     console.log('data: '+db);
   });
