@@ -88,7 +88,7 @@
                     //enviar mensagem
                 soket.emit('sendMsg', msgObj);
                 renderMSG(msgObj);
-                salvarUser(msgObj.altor);
+                salvarUser(msgObj.user.nome);
                 $('#txt').val('');
                 console.log(name_mensagem);
 
