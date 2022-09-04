@@ -13,7 +13,7 @@ const io = new Server(server, {
     methods: ["GET", "POST"],
   },
 });
-const db =[]
+const db =[];
 
 
 io.on("connection", (socket) => {
@@ -22,18 +22,37 @@ io.on("connection", (socket) => {
   socket.on("join_room", (data) => {
     console.log('Grupo: '+data);
     console.log(db);
-    for(let item of db){
-      console.log("Item :"+item);
-      
+    let grupo={}
+    if(db.length<=0){
+      console.log('nem um item no banco de dados');
+      grupo ={data:[]}
+      db.push(grupo);
+      socket.join(data);
+
+    }else if(db.length >0){
+      for(let i =0;i<db.length;i++){
+        if(data == db[i]){
+          socket.join(data);
+          //atualizar
+        }else if(i >= db.length){
+          console.log('grupo não registrado');
+          grupo ={data:[]}
+          db.push(grupo);
+          socket.join(data)
+
+        }
+      }
     }
-  
-    console.log(`User with ID: ${socket.id} no Grupo: ${data}`);
+
+
+   console.log(`User with ID: ${socket.id} no Grupo: ${data}`);
 });
 
   socket.on("send_message", (data) => {
     const {room,author,message,time} = data;
     let grupo = {};
-    grupo={ room:{author:author,message:message,time:time,sockeId:socket.id}};
+    // grupo={ room:{author:author,message:message,time:time,sockeId:socket.id}};
+    // db.push(grupo);
     socket.to(room).emit("receive_message", data);
     console.log('data: '+db);
   });
