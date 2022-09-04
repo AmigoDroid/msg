@@ -45,9 +45,9 @@
         //mostar mensagem na tela
         function renderMSG(msg) {
             $('#mensagemtxt').append(`    <div id='msg'>
-                <div id='titulo'> <strong>Name:</strong> ${msg.altor}</div>
-                <strong>Message:</strong> ${msg.mensagem} <br> 
-                <strong>Hora:</strong> ${msg.hora}:${msg.min}
+                <div id='titulo'> <strong>Name:</strong> ${msg.user.nome}</div>
+                <strong>Message:</strong> ${msg.body} <br> 
+                <strong>Hora:</strong> ${msg.info.hora}:${msg.info.minuto}
         </div>`)
         }
         //mostrar mensagens anteriores 
@@ -81,10 +81,9 @@
             var hora = date.getHours();
             var min = date.getMinutes();
                 var msgObj = {
-                        altor: name_usuario,
-                        mensagem: name_mensagem,
-                        hora:hora,
-                        min:min
+                    user:{nome:name_usuario,id:'1'},
+                     body:name_mensagem,
+                     info:{hora:hora,minuto:min}
                     }
                     //enviar mensagem
                 soket.emit('sendMsg', msgObj);
