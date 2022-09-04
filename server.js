@@ -23,29 +23,25 @@ io.on("connection", (socket) => {
     console.log('Grupo: '+data);
 
     for(let i =0; i< db.length ;i++){
-      const obj = db[i];
-      console.log(obj);
-      if(false){
-      console.log('grupo existe');
-      socket.join(data);
-      socket.to(data).emit('update',db[''+data])
-      console.log('data: '+JSON.stringify(db));
-    }else{
-      let grupo = {};
-      grupo[data]=[];
-      db.push(grupo);
-      console.log('grupo não existe');
-      socket.join(data);
-      console.log('data: '+JSON.stringify(db));
+      if(db[i] == data){
+        console.log(db[i]);
+        socket.join(db[i]);
+      }else if( i>= db.length){
+        console.log("não encontrado o grupo no banco de dados");
+        let grupo ={};
+        grupo[data] = [];
+        socket.join(data);
+      }
     }
   
-    console.log(`User with ID: ${socket.id} joined room: ${data}`);
-}});
+    console.log(`User with ID: ${socket.id} no Grupo: ${data}`);
+});
 
   socket.on("send_message", (data) => {
     const {room,author,message,time} = data;
+    let grupo = {};
     grupo[""+room].push({author:author,message:message,time:time,sockeId:socket.id});
-    socket.to(data.room).emit("receive_message", data);
+    socket.to(room).emit("receive_message", data);
     console.log('data: '+db);
   });
 
