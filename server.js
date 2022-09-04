@@ -20,17 +20,16 @@ io.on("connection", (socket) => {
   console.log(`User Connected: ${socket.id}`);
 
   socket.on("join_room", (data) => {
-    const {room,author,message,time} = data;
-    console.log('Grupo: '+room);
-    if(db.find(grupoId => grupoId[''+room] == room)){
+    console.log('Grupo: '+data);
+    if(db.find(grupoId => grupoId[''+data] == data)){
       console.log('grupo existe');
-      socket.join(data.room);
-      socket.to(room).emit('update',db.find(grupoId => grupoId[''+room]))
+      socket.join(data);
+      socket.to(data).emit('update',db.find(grupoId => grupoId[''+data]))
     }else{
-      grupo[""+room] =[];
+      grupo[""+data] =[];
       db.push(grupo);
       console.log('grupo não existe');
-      socket.join(data.room);
+      socket.join(data);
     }
   
     console.log(`User with ID: ${socket.id} joined room: ${data}`);
