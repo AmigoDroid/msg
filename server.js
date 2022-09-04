@@ -31,6 +31,7 @@ io.on("connection", (socket) => {
 
     }else if(db.length >0){
       for(let i =0;i<db.length;i++){
+        console.log("DB: "+db[i]);
         if(data == db[i]){
           socket.join(data);
           //atualizar
