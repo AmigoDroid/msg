@@ -22,23 +22,9 @@ io.on("connection", (socket) => {
   socket.on("join_room", (data) => {
     console.log('Grupo: '+data);
     console.log(db);
-    for(let i =0; i< db.length ;i++){
-      console.log(db[i]);
-      if(db[i] == data){
-        console.log(db[i]);
-        socket.join(db[i]);
-
-        console.log('grupo localizado');
-        console.log(db);
-
-      }else if( i>= db.length){
-
-        console.log("não encontrado o grupo no banco de dados");
-        let grupo ={};
-        grupo[data] = [];
-        db.push(grupo)
-        socket.join(data);
-      }
+    for(let item of db){
+      console.log("Item :"+item);
+      
     }
   
     console.log(`User with ID: ${socket.id} no Grupo: ${data}`);
