@@ -34,6 +34,7 @@ io.on("connection", (socket) => {
         if(data == db[i]){
           socket.join(data);
           //atualizar
+          console.log('Grupo localizado');
         }else if(i >= db.length){
           console.log('grupo não registrado');
           grupo ={data:[]}
