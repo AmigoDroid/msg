@@ -21,7 +21,7 @@ var datamsg =[];
 //ferificar se tem alguém conectado
 io.on('connection', socket =>{
 console.log('conectado: id='+socket.id);
- socket.broadcast.emit('msgall',datamsg);
+ socket.emit('msgall',datamsg);
 
 //ouvindo se alguém mandou mensagem
 socket.on('sendMsg', data => {
