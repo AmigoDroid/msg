@@ -23,12 +23,16 @@ io.on("connection", (socket) => {
     console.log('Grupo: '+data);
 
     for(let i =0; i< db.length ;i++){
+      console.log(db[i]);
       if(db[i] == data){
         console.log(db[i]);
         socket.join(db[i]);
+
         console.log('grupo localizado');
         console.log(db);
-      }else if( i>= db.length){
+
+      }else if( i== db.length){
+
         console.log("não encontrado o grupo no banco de dados");
         let grupo ={};
         grupo[data] = [];
