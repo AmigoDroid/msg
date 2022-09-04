@@ -21,7 +21,7 @@ io.on("connection", (socket) => {
 
   socket.on("join_room", (data) => {
     console.log('Grupo: '+data);
-
+    console.log(db);
     for(let i =0; i< db.length ;i++){
       console.log(db[i]);
       if(db[i] == data){
