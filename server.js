@@ -28,7 +28,7 @@ io.on("connection", (socket) => {
       socket.to(data).emit('update',db.find(grupoId => grupoId[''+data]))
       console.log('data: '+JSON.stringify(db));
     }else{
-      grupo[data] = [];
+      grupo[data];
       db.push(grupo);
       console.log('grupo não existe');
       socket.join(data);
