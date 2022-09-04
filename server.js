@@ -1,39 +1,36 @@
-const express = require('express');
-const path  = require('path');
-const app =express();
-const server = require('http').createServer(app);
-const io = require('socket.io')(server,{cors:{origin:"*"}});
-const PORT = process.env.PORT ||3333;
+const express = require("express");
+const app = express();
+const http = require("http");
+const cors = require("cors");
+const { Server } = require("socket.io");
+app.use(cors());
 
-app.use(express.static(path.join(__dirname,'public')));
-app.set('views',path.join(__dirname,"public"));
-app.engine('html',require('ejs').renderFile);
-app.set('view engine','html');
+const server = http.createServer(app);
 
-//rota padrão do server
-app.use("/",(req , res)=>{
- res.render("admin")
-}); 
-
-//armazaenar as mensagens
-var datamsg =[];
-
-//ferificar se tem alguém conectado
-io.on('connection', socket =>{
-console.log('conectado: id='+socket.id);
- socket.emit('msgall',datamsg);
-
-//ouvindo se alguém mandou mensagem
-socket.on('sendMsg', data => {
-    datamsg.push(data);
-   
-    socket.broadcast.emit('recebermsg',data);
-    console.log(data);
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"],
+  },
 });
 
+io.on("connection", (socket) => {
+  console.log(`User Connected: ${socket.id}`);
+
+  socket.on("join_room", (data) => {
+    socket.join(data);
+    console.log(`User with ID: ${socket.id} joined room: ${data}`);
+  });
+
+  socket.on("send_message", (data) => {
+    socket.to(data.room).emit("receive_message", data);
+  });
+
+  socket.on("disconnect", () => {
+    console.log("User Disconnected", socket.id);
+  });
 });
 
-//ouvindo na porta 3000
-server.listen(PORT,()=>{
-    console.log('rodando na porta: '+PORT);
+server.listen(3001, () => {
+  console.log("SERVER RUNNING");
 });
