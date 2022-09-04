@@ -14,7 +14,7 @@ const io = new Server(server, {
   },
 });
 const db =[]
-let grupo = new Object();
+let grupo = {};
 
 io.on("connection", (socket) => {
   console.log(`User Connected: ${socket.id}`);
