@@ -22,13 +22,13 @@ io.on("connection", (socket) => {
   socket.on("join_room", (data) => {
     console.log('Grupo: '+data);
 
-    if(db.find(grupoId => grupoId[''+data] == ""+data)){
+    if(db[''+data] == ""+data){
       console.log('grupo existe');
       socket.join(data);
-      socket.to(data).emit('update',db.find(grupoId => grupoId[''+data]))
+      socket.to(data).emit('update',db[''+data])
       console.log('data: '+JSON.stringify(db));
     }else{
-      grupo[data];
+      grupo[data]=[];
       db.push(grupo);
       console.log('grupo não existe');
       socket.join(data);
